@@ -8,6 +8,7 @@ import br.com.tadeubraga.timetravel.exception.ApplicationException;
 import br.com.tadeubraga.timetravel.model.Place;
 import br.com.tadeubraga.timetravel.model.TimeTravel;
 import br.com.tadeubraga.timetravel.repository.TimeTravelRepository;
+import br.com.tadeubraga.timetravel.service.PlaceService;
 import br.com.tadeubraga.timetravel.service.TimeTravelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +18,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class TimeTravelServiceImpl implements TimeTravelService {
 	private final TimeTravelRepository timeTravelRepository;
-	private final PlaceServiceImpl placeServiceImpl;
+	private final PlaceService placeService;
 
 	@Override
 	public TimeTravel save(TimeTravel entity) {
@@ -27,7 +28,7 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 	}
 
 	public void initExistentPlace(TimeTravel entity) {
-		Optional<Place> placeDb = placeServiceImpl.findByCityIgnoreCaseAndCountryIgnoreCase(entity.getPlace().getCity(),
+		Optional<Place> placeDb = placeService.findByCityIgnoreCaseAndCountryIgnoreCase(entity.getPlace().getCity(),
 				entity.getPlace().getCountry());
 		if (placeDb.isPresent()) {
 			entity.setPlace(placeDb.get());
