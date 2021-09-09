@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.tadeubraga.timetravel.exception.ApplicationException;
 import br.com.tadeubraga.timetravel.model.Place;
 import br.com.tadeubraga.timetravel.model.TimeTravel;
 import br.com.tadeubraga.timetravel.repository.TimeTravelRepository;
@@ -42,6 +43,8 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 	private void validate(TimeTravel entity) {
 		if (findByAllData(entity).isPresent()) {
 			log.error("What a weird time travel, avoiding paradox.");
+			throw ApplicationException.builder().message("This person already traveled to this place in the same date.")
+					.build();
 		}
 	}
 
