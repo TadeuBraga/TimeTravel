@@ -1,5 +1,7 @@
 package br.com.tadeubraga.timetravel.controller.dto;
 
+import javax.validation.constraints.NotEmpty;
+
 import br.com.tadeubraga.timetravel.model.Place;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +10,9 @@ import lombok.Data;
 @Builder
 public class PlaceDto {
 	private Long id;
+	@NotEmpty
 	private String city;
+	@NotEmpty
 	private String country;
 
 	public Place toModel() {

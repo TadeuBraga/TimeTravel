@@ -2,6 +2,11 @@ package br.com.tadeubraga.timetravel.controller.dto;
 
 import java.util.Calendar;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
@@ -13,9 +18,14 @@ import lombok.Data;
 @Builder
 public class TimeTravelDto {
 	private Long id;
+	@NotEmpty
+	@Size(min = 5, max = 10)
 	private String personalGalaticId;
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
+	@NotNull
 	private Calendar date;
+	@NotNull
+	@Valid
 	private PlaceDto place;
 
 	public TimeTravel toModel() {

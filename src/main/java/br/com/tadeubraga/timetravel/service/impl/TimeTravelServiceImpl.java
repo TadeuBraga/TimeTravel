@@ -43,9 +43,7 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 	private void validate(TimeTravel entity) {
 		if (findByAllData(entity).isPresent()) {
 			log.error("What a weird time travel, avoiding paradox.");
-			throw ApplicationException.builder().message("This person already traveled to this place in the same date.")
-					.build();
+			throw new ApplicationException("This person already traveled to this place in the same date.");
 		}
 	}
-
 }

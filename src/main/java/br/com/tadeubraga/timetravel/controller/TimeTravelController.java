@@ -1,5 +1,7 @@
 package br.com.tadeubraga.timetravel.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ public class TimeTravelController {
 	private final TimeTravelService timeTravelService;
 
 	@PostMapping
-	public ResponseEntity<TimeTravelDto> save(@RequestBody TimeTravelDto timeTravelDto) {
+	public ResponseEntity<TimeTravelDto> save(@RequestBody @Valid TimeTravelDto timeTravelDto) {
 		var timeTravelDtoResult = TimeTravelDto.ofModel(timeTravelService.save(timeTravelDto.toModel()));
 		return new ResponseEntity<TimeTravelDto>(timeTravelDtoResult, HttpStatus.CREATED);
 	}
