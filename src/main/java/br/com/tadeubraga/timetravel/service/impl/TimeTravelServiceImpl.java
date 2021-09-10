@@ -1,5 +1,6 @@
 package br.com.tadeubraga.timetravel.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -45,6 +46,21 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 		if (findByAllData(entity).isPresent()) {
 			log.error("What a weird time travel, avoiding paradox.");
 			throw new ApplicationException("This person already traveled to this place in the same date.");
+		}
+	}
+
+	@Override
+	public List<TimeTravel> findAll() {
+			return timeTravelRepository.findAll();
+	}
+
+	@Override
+	public TimeTravel findById(Long id) {
+		Optional<TimeTravel> timeTravelOp = timeTravelRepository.findById(id);
+		if(timeTravelOp.isPresent()) {
+			return timeTravelOp.get();
+		} else {
+			throw new ApplicationException("This time travel does not exist.");
 		}
 	}
 }

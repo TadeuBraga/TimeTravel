@@ -1,9 +1,14 @@
 package br.com.tadeubraga.timetravel.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,4 +29,16 @@ public class TimeTravelController {
 		var timeTravelDtoResult = TimeTravelDto.ofModel(timeTravelService.save(timeTravelDto.toModel()));
 		return new ResponseEntity<TimeTravelDto>(timeTravelDtoResult, HttpStatus.CREATED);
 	}
+
+	@GetMapping
+	public List<TimeTravelDto> findAll() {
+		return timeTravelService.findAll().stream().map(TimeTravelDto::ofModel).collect(Collectors.toList());
+	}
+
+	@GetMapping("/{id}")
+	public TimeTravelDto findById(@PathVariable Long id) {
+		return TimeTravelDto.ofModel(timeTravelService.findById(id));
+	}
+	
+	
 }
