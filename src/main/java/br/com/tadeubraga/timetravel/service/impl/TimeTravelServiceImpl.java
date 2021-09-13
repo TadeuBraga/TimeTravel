@@ -23,9 +23,11 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 
 	@Override
 	public TimeTravel save(TimeTravel entity) {
+		log.info("A new time travel has been received; timeTravel={}.", entity);
 		validate(entity);
 		initExistentPlace(entity);
-		return timeTravelRepository.save(entity);
+		TimeTravel result = timeTravelRepository.save(entity);
+		return result;
 	}
 
 	public void initExistentPlace(TimeTravel entity) {
@@ -33,6 +35,7 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 				entity.getPlace().getCountry());
 		if (placeDb.isPresent()) {
 			entity.setPlace(placeDb.get());
+			log.info("The referenced place was already present in database; timeTravel.place={}.", entity.getPlace());
 		}
 	}
 
@@ -51,16 +54,21 @@ public class TimeTravelServiceImpl implements TimeTravelService {
 
 	@Override
 	public List<TimeTravel> findAll() {
-			return timeTravelRepository.findAll();
+		log.info("Listing all existing time travels.");
+		return timeTravelRepository.findAll();
 	}
 
 	@Override
 	public TimeTravel findById(Long id) {
+		log.info("Finding an existing time travel by id; timeTravel.id={}.", id);
 		Optional<TimeTravel> timeTravelOp = timeTravelRepository.findById(id);
-		if(timeTravelOp.isPresent()) {
+		if (timeTravelOp.isPresent()) {
+			log.info("Existing time travel are going to be returned; timeTravel.id={}.", id);
 			return timeTravelOp.get();
 		} else {
-			throw new ApplicationException("This time travel does not exist.");
+			String message = "This time travel does not exist";
+			log.error("{}; timeTravel.id={}", message, id);
+			throw new ApplicationException(message);
 		}
 	}
 }
