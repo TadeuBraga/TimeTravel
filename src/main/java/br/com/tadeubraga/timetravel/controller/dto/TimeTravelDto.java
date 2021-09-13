@@ -5,6 +5,7 @@ import java.util.Calendar;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -20,6 +21,7 @@ public class TimeTravelDto {
 	private Long id;
 	@NotEmpty
 	@Size(min = 5, max = 10)
+	@Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9 ]+$", message = "Must be alphanumeric and start with letter")
 	private String personalGalaticId;
 	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@NotNull
