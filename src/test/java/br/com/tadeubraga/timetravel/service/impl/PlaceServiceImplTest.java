@@ -29,7 +29,7 @@ class PlaceServiceImplTest {
 		when(placeRepository.findByCityIgnoreCaseAndCountryIgnoreCase(place.getCity(), place.getCountry()))
 				.thenReturn(Optional.of(place));
 		var result = placeServiceImpl.findByCityIgnoreCaseAndCountryIgnoreCase(place.getCity(), place.getCountry());
-		assertThat(result, equalTo(place));
+		assertThat(result.get(), equalTo(place));
 	}
 
 }
